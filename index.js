@@ -21,8 +21,8 @@ async function run(){
 
     app.get('/Post', async (req, res) => {
       const query = {}
-      const cursor = postCollection.find(query).sort({like:1});
-      const services = await cursor.limit(3).toArray();
+      const cursor = postCollection.find(query).sort({like:-1});
+      const services = await cursor.toArray();
       res.send(services);
       });
     app.get('/allPost', async (req, res) => {
@@ -31,6 +31,11 @@ async function run(){
       const services = await cursor.toArray();
       res.send(services);
       });
+      app.post('/post', async (req, res) => {
+        const post = req.body;
+        const result = await postCollection.insertOne(post);
+        res.send(result);
+        });
   }
   finally{
 
